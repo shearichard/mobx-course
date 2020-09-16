@@ -1,4 +1,4 @@
-import {action, autorun, observable} from "mobx";
+import {/*action,*/ autorun, observable, runInAction} from "mobx";
 
 class Person {
     @observable
@@ -8,10 +8,10 @@ class Person {
         this.firstName = name;
     }
     //
-    @action 
-    updateFirstName(name: string){
-        this.firstName = name;
-    }
+    //@action 
+    //updateFirstName(name: string){
+    //    this.firstName = name;
+    //}
 }
 //
 const newPerson = new Person('Georgy Gleazer');
@@ -20,6 +20,10 @@ autorun(() => {
     console.log(`Person name is : ${newPerson.firstName}`);
 });
 //
-newPerson.updateFirstName('Fred');
+runInAction(() => {
+    newPerson.firstName = 'Fred';
+});
+//
+//newPerson.updateFirstName('Fred');
 //
 export {};
