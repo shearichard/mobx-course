@@ -20,6 +20,12 @@ class Person {
     updateLastName(name: string){
         this.lastName = name;
     }
+
+    @action 
+    updateFullName(name: string, lastName: string){
+        this.firstName = name;
+        this.lastName = lastName;
+    }
 }
 
 //const newPerson = new Person(name: 'Georgy', lastName: 'Gleazer');
@@ -30,7 +36,6 @@ autorun(() => {
     console.log(`Person name is : ${newPerson.firstName} ${newPerson.lastName}`);
 });
 //
-newPerson.updateFirstName('Martha');
-newPerson.updateLastName('Jones');
+newPerson.updateFullName('Martha', 'Jones');
 
 export {};
