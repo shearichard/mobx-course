@@ -3,27 +3,34 @@ import {action, autorun, observable /*, runInAction */} from "mobx";
 class Person {
     @observable
     firstName: string;
+
+    @observable
+    lastName: string;
     //
-    constructor(name: string){
+    constructor(name: string, lastName: string){
+        this.firstName = name;
+        this.lastName = lastName;
+    }
+    
+    @action 
+    updateFirstName(name: string){
         this.firstName = name;
     }
-    //
-    //@action 
-    //updateFirstName(name: string){
-    //    this.firstName = name;
-    //}
+    @action 
+    updateLastName(name: string){
+        this.lastName = name;
+    }
 }
-//
-const newPerson = new Person('Georgy Gleazer');
+
+//const newPerson = new Person(name: 'Georgy', lastName: 'Gleazer');
+const newPerson = new Person('Fred', 'Smith');
+
 //This is for logging
 autorun(() => {
-    console.log(`Person name is : ${newPerson.firstName}`);
+    console.log(`Person name is : ${newPerson.firstName} ${newPerson.lastName}`);
 });
 //
-const updater = action(() => {
-    newPerson.firstName = 'Fred';
-});
-
-updater()
+newPerson.updateFirstName('Martha');
+newPerson.updateLastName('Jones');
 
 export {};
