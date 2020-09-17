@@ -1,4 +1,6 @@
-import {action, autorun, observable /*, runInAction */} from "mobx";
+import {action, autorun, observable , runInAction } from "mobx";
+
+const waitForPromise = async () => new Promise(resolve => setTimeout(resolve, 1000));
 
 class Person {
     @observable
@@ -28,7 +30,6 @@ class Person {
     }
 }
 
-//const newPerson = new Person(name: 'Georgy', lastName: 'Gleazer');
 const newPerson = new Person('Fred', 'Smith');
 
 //This is for logging
@@ -36,6 +37,13 @@ autorun(() => {
     console.log(`Person name is : ${newPerson.firstName} ${newPerson.lastName}`);
 });
 //
-newPerson.updateFullName('Martha', 'Jones');
+runInAction(async () => {
+    newPerson.firstName = 'Martha';
+    //The effect of putting this call to `waitForPromise` is
+    //for processing to sleep for one second . By doing this 
+    //the change loop becomes visible in the console.  
+    await waitForPromise();
+    newPerson.lastName = 'Jones';
+});
 
 export {};
